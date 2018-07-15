@@ -6,10 +6,10 @@ use Illuminate\Support\Facades\Storage;
 
 class RootController extends Controller
 {
-	public function index($dir = '/')
+	public function index($path = '/')
 	{
-		$files = Storage::files($dir);
-		$directories = Storage::directories($dir);
-		return view('index', compact('directories', 'files'));
+		$files = Storage::files($path);
+		$directories = Storage::directories($path);
+		return view('index', compact('directories', 'files', 'path'));
 	}
 }

@@ -30,6 +30,10 @@
 <body class="bg-light">
 	<div class="container bg-white">
 		<div class="row mt-4">
+
+			<div class="bg-green col-md-12">
+				<p class="mt-2 mb-2 text-info"><b class="text-warning">当前路径：</b> {{ $path }}</p>
+			</div>
 			
 			<div class="bg-lan-light col-md-3 border-right">
 				<div class="mt-2 mb-2">

@@ -35,7 +35,7 @@
 				<p class="mt-2 mb-2 text-info"><b class="text-warning">当前路径：</b> {{ $path }}</p>
 			</div>
 			
-			<div class="bg-lan-light col-md-3 border-right">
+			<div class="bg-lan-light col-md-3">
 				<div class="mt-2 mb-2">
 			    	<h2 class="text-light">目录</h2>
 			    	<ul class="list-group dir-list">
@@ -44,37 +44,38 @@
 			    		</li>
 			    		@if(url()->current() != route('index'))
 			    		<li class="list-group-item">
-			    			<a class="text-dark" href="../">上一层</a>
+			    			<a class="text-dark" href="{{ backU($path) }}">上一层</a>
 			    		</li>
 			    		@endif
 			    		@foreach($directories as $dir)
 			    		<li class="list-group-item bg-lan-dark">
-			    			<a class="text-light" href="{{ route('index', $dir) }}">{{ $dir }}</a>
+			    			<a class="text-light" href="{{ route('index', path2url($dir)) }}">{{ $dir }}</a>
 			    		</li>
 			    		@endforeach
 			  	    </ul>
 		   		</div>
 			</div>
 
-			<div class="col-md-9">
-				<table class="table">
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col">#</th>
-							<th scope="col">文件</th>
-							<th scope="col">创建日期</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach($files as $i => $file)
-						<tr>
-							<th scope="row">{{ $i + 1 }}</th>
-							<td>{{ $file }}</td>
-						</tr>
-						@endforeach
-					</tbody>
-				</table>
-			</div>
+			<table class="table col-md-9">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">文件</th>
+						<th scope="col">修改日期</th>
+						<th scope="col">大小</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($files as $i => $file)
+					<tr>
+						<th scope="row">{{ $i + 1 }}</th>
+						<td><a href="{{ route('file.show', path2url($file)) }}">{{ str_replace($path . '/', '', $file) }}</a></td>
+						<td>{{ Carbon\Carbon::createFromTimestamp(Storage::lastModified($file))->format('Y/m/d H:i') }}</td>
+						<td>{{ human_filesize(Storage::size($file)) }}</td>
+					</tr>
+					@endforeach
+				</tbody>
+			</table>
 
 	    </div>
 	</div>
